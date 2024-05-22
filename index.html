@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fon</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            transition: background-color 0.5s ease;
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .input-group {
+            display: inline-flex;
+            align-items: center;
+            margin: 10px;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        label {
+            font-size: 18px;
+            color: #555;
+        }
+
+        select {
+            margin: 10px;
+            padding: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #single, #multiple {
+            margin-bottom: 20px;
+        }
+
+        #multiple {
+            height: 100px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Choose a background color:</h1>
+
+    <div class="container">
+        <div class="column">
+            <div class="input-group">
+                <input type="radio" id="blue" name="color" value="blue">
+                <label for="blue">Blue</label>
+            </div>
+            <div class="input-group">
+                <input type="radio" id="green" name="color" value="green">
+                <label for="green">Green</label>
+            </div>
+            <div class="input-group">
+                <input type="radio" id="yellow" name="color" value="yellow">
+                <label for="yellow">Yellow</label>
+            </div>
+        </div>
+        
+        <div class="column">
+            <div class="input-group">
+                <input type="checkbox" id="blue-checkbox" name="checkbox" value="blue">
+                <label for="blue-checkbox">Blue</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" id="green-checkbox" name="checkbox" value="green">
+                <label for="green-checkbox">Green</label>
+            </div>
+            <div class="input-group">
+                <input type="checkbox" id="yellow-checkbox" name="checkbox" value="yellow">
+                <label for="yellow-checkbox">Yellow</label>
+            </div>
+        </div>
+    </div>
+    
+    <h2>Or choose from a list:</h2>
+    
+    <select id="single" name="single">
+      <option value="blue">Blue</option>
+      <option value="green">Green</option>
+      <option value="yellow">Yellow</option>
+    </select>
+    
+    <select id="multiple" name="multiple" multiple>
+      <option value="blue">Blue</option>
+      <option value="green">Green</option>
+      <option value="yellow">Yellow</option>
+    </select>
+
+<script>
+
+const radioInputs = document.getElementsByName('color');
+
+for (const input of radioInputs) {
+  input.addEventListener('change', (event) => {
+    document.body.style.backgroundColor = event.target.value;
+  });
+}
+
+const checkboxInputs = document.getElementsByName('checkbox');
+
+for (const input of checkboxInputs) {
+  input.addEventListener('change', (event) => {
+    const checkedInputs = Array.from(checkboxInputs).filter((input) => input.checked);
+
+    if (checkedInputs.length === 0) {
+      document.body.style.backgroundColor = 'white';
+    } else {
+      let currentIndex = 0;
+      setInterval(() => {
+        const currentColor = checkedInputs[currentIndex].value;
+        document.body.style.backgroundColor = currentColor;
+        currentIndex = (currentIndex + 1) % checkedInputs.length;
+      }, 2000);
+    }
+  });
+}
+
+const singleSelect = document.getElementById('single');
+
+singleSelect.addEventListener('change', (event) => {
+  document.body.style.backgroundColor = event.target.value;
+});
+
+const multipleSelect = document.getElementById('multiple');
+
+multipleSelect.addEventListener('change', (event) => {
+  const selectedColors = Array.from(event.target.selectedOptions).map(
+    (option) => option.value
+  );
+  document.body.style.backgroundColor = selectedColors[0];
+});
+</script>
+</body>
+</html>
